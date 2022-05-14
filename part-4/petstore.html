@@ -38,8 +38,21 @@
                         <p class="price">{{ product.price | formatPrice }}</p>
                         <button class="default" v-on:click="addToCart" v-if="canAddToCart">Add to Cart</button>
                         <button class="defautl" v-else>Add To Cart</button>
+                        <span class="inventory-message" v-if="product.availableInventory - cartItemCount === 0">
+                            All is Out!
+                        </span>
+                        <span class="inventory-message" v-else-if="product.availableInventory - cartItemCount < 5">
+                            Only {{ product.availableInventory - cartItemCount}} left!
+                        </span>
+                        <span class="inventory-message" v-else>
+                            Bay now!!!
+                        </span>
+                        <div class="rating"></div>
+                        <span v-bind:class="{'rating-active': checkRating(n)}" v-for="n in 5">☆</span>
                     </div>
                 </div>
+
+
                 <div v-else>
                     <div class="col-md-6">
                         <strong>First Name:</strong>
@@ -123,7 +136,8 @@
                 description: 'A 25 pound bag of <em>irresistible</em>' + 'organic goodness for your cat.',
                 price: 2000,
                 image: 'assets/image/product-fullsize.png',
-                availableInventory: 5,
+                availableInventory: 15,
+                rating: 3
                 },
                 cart: [],
                 showProduct: true,
@@ -139,7 +153,7 @@
                     method: 'Home address',
                     gift: 'Send a gift',
                     sendGift: 'Send a gift',
-                    dontSendGift: 'Dont send gift'
+                    dontSendGift: 'Dont send gift',
                 },
                 states: {
                     AL: 'Alabama',
@@ -174,6 +188,9 @@
                 },
                 submitForm() {
                     alert('submited')
+                },
+                checkRating(n) {
+                    return this.product.rating - n >= 0;
                 }
             },
             computed: {
