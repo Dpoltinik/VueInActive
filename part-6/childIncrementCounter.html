@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{ counter }}</p>
+        <button v-on:click="incrementCounter">Increment from parent</button>
+        <my-component v-on:increment-me="incrementCounter"></my-component>
+    </div>
+    <script>
+        const myComponent = {
+            template: `
+            <div>
+                <button v-on:click="childIncrementCounter">Increment from child</button>
+            </div>
+            `,
+            methods: {
+                childIncrementCounter(){
+                    this.$emit('increment-me')
+                }
+            }
+        }
+
+        new Vue({
+            el: '#app',
+            data() {
+                return {counter: 0};
+            },
+            methods: {
+                incrementCounter() {
+                    this.counter++
+                }
+            },
+            components: {'myComponent': myComponent}
+        })
+    </script>
+</body>
+</html>
