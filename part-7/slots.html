@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <form-component :title="titleLabel" :author="authorLabel">
+            <h1>{{ header }}</h1>
+        </form-component>
+    </div>
+    <script>
+        const formComponent = {
+            template: `
+            <div>
+                <slot></slot>
+                <label for='title'>{{title}}</label>
+                    <input id='title' type='text'/><br/>
+                <label for='author'>{{author}}</label>
+                    <input id='author' type='text'/><br/>
+                <button>Submit</button>
+            </div>
+            `,
+            props: ['title', 'author']
+        }
+
+        new Vue({
+            el: '#app',
+            components: {'formComponent': formComponent},
+            data() {
+                return {
+                    titleLabel: 'This title label',
+                    authorLabel: 'This author label',
+                    header: 'This is Headers'
+                }
+            }
+        })
+    </script>
+</body>
+</html>
