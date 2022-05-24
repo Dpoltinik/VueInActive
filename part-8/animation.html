@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+    <div class="app">
+        <my-animation :show="show" :title="titleElem" :description = "desElem"></my-animation>
+    </div>
+
+    <script>
+        const myAnimation = {
+            template:`
+            <div>
+                <div @click='show = !show'>
+                    <h1>{{ title }}
+                </div>
+                <transition name='fade'>
+                    <h2 v-if='show'>
+                        {{ description }}
+                    </h2>
+                </transition>
+            </div>
+            `,
+            props:['title', 'description', 'show']
+        }
+
+        new Vue({
+            el: '.app',
+            data() {
+                return {
+                    titleElem: 'My name Slim Shady',
+                    desElem: 'This is very Important Text',
+                    show: false
+                }
+            },
+            components: {'myAnimation': myAnimation}
+        })
+    </script>
+
+    <style>
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity 3s ease-out;
+        }
+
+        .fade-enter, .fade-leave-to {
+            opacity: 0;
+        }
+    </style> 
+</body>
+</html>
