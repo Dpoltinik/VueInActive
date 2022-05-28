@@ -6,12 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+    <style>
+        .component-fade-enter-active, .component-fade-leave-active {
+            transition: opacity 2s ease;
+        }
+        .component-fade-enter, .component-fade-leave-to {
+            opacity: 0;
+        }
+    </style>
 </head>
 <body>
     <div class="app">
         <button @click="cycle">Cycle</button>
         <h1>
-        <component :is="currentView"></component>
+            <transition name="component-fade" mode="out-in">
+                <component :is="currentView"></component>
+            </transition>
         </h1>
     </div>
     <script>
