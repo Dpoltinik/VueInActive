@@ -48,8 +48,12 @@
 <script>
 import MyHeader from './Header.vue';
 import { mapGetters } from 'vuex';
+import { productsRef } from '../firebase';
 export default {
   name: 'imain',
+  firebase: {
+    products: productsRef
+  },
   data() {
     return {
       cart: []
@@ -98,7 +102,7 @@ export default {
       }
     },
     ...mapGetters([
-      'products'
+      'session'
     ])
   },
   filters: {
